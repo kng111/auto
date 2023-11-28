@@ -36,12 +36,16 @@ def button(update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=query.message.chat_id, text="Отправляю в группу...")
         group_chat_id = [-1002086937947,-4080817111]
         for i in range(len(group_chat_id)):
-            if query.message.text:
-                context.bot.send_message(chat_id=group_chat_id[i], text=query.message.text)
-            elif query.message.photo:
-                photo = query.message.photo[-1]
-                caption = query.message.caption if query.message.caption else ""
-                context.bot.send_photo(chat_id=group_chat_id[i], photo=photo.file_id, caption=caption)
+                try:
+                    if query.message.text:
+                        context.bot.send_message(chat_id=group_chat_id[i], text=query.message.text)
+                    elif query.message.photo:
+                        photo = query.message.photo[-1]
+                        caption = query.message.caption if query.message.caption else ""
+                        context.bot.send_photo(chat_id=group_chat_id[i], photo=photo.file_id, caption=caption)
+                except:
+                    print('47')
+                    pass
 
         else:
             query.edit_message_text(text="Сообщение уже отправлено в группы.")
@@ -52,7 +56,7 @@ def button(update: Update, context: CallbackContext):
 
 button_handler = CallbackQueryHandler(button)
 
-updater = Updater(token='6769072442:AAHPHW1_iqZ1D7V4hXiy0i81KW5hu1II5So')
+updater = Updater(token='token')
 dispatcher = updater.dispatcher
 
 dispatcher.add_handler(message_handler)
